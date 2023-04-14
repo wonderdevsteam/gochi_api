@@ -1,0 +1,16 @@
+[
+  {
+    "_id": "84f849bb-cf30-40d1-8356-e8466d447f29",
+    "name": "devcontainer",
+    "default": true,
+    "sortNum": 10000,
+    "created": "2023-04-14T20:53:47.278Z",
+    "modified": "2023-04-14T20:53:47.278Z",
+    "data": [
+      {
+        "name": "HOST",
+        "value": "0.0.0.0:8080"
+      }
+    ]
+  }
+]

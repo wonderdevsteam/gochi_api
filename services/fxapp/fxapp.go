@@ -12,7 +12,7 @@ import (
 )
 
 var (
-	StartedAt    time.Duration
+	StartedAt    time.Time
 	ShuttingDown = false // This variable allows to ignore some errors inherited from the shutdown
 )
 
@@ -41,7 +41,7 @@ func Shutdown(app *fx.App, timeout time.Duration) {
 	ShuttingDown = true
 
 	logger := zap.L().Named("Lifecycle")
-	logger.Info("📢 Stopping app...", zap.Duration("uptime", time.Since(appStartedAt)))
+	logger.Info("📢 Stopping app...", zap.Duration("uptime", time.Since(StartedAt)))
 
 	// Listen signal to force exit
 	c := make(chan os.Signal, 1)
@@ -61,5 +61,5 @@ func Shutdown(app *fx.App, timeout time.Duration) {
 		logger.Fatal("🧨💥 Unable to cleanly stop app", zap.Error(err))
 	}
 
-	logger.In
+	logger.Info("Shutted down")
 }

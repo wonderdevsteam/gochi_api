@@ -9,18 +9,20 @@ import (
 	"github.com/go-chi/chi/middleware"
 	"go.uber.org/zap"
 
-	"go-clean-archi/servers"
-	"go-clean-archi/servers/api/routes"
-	"go-clean-archi/servers/cors"
+	"your_module/domain/usecases"
+	"your_module/servers"
+	"your_module/servers/api/config"
+	"your_module/servers/api/routes"
+	"your_module/servers/cors"
 )
 
 type API struct {
-	httpConfig *Config
+	httpConfig *config.Config
 	endpoints  *routes.Endpoints
 	httpServer *http.Server
 }
 
-func NewHTTP(httpConfig *Config, logger *zap.Logger, uc *usecases.Usecases) servers.TCP {
+func NewHTTP(httpConfig *config.Config, logger *zap.Logger, uc *usecases.Usecases) servers.TCP {
 	return &API{
 		httpConfig: httpConfig,
 		endpoints:  routes.NewEndpoints(logger, uc),
@@ -53,7 +55,6 @@ func (transport *API) initMiddlewares(router chi.Router) {
 	router.Use(middleware.SetHeader("X-Frame-Options", "deny"))
 	router.Use(middleware.Timeout(5 * time.Minute)) //nolint:gomnd
 	router.Use(middleware.Heartbeat("/ping"))
-	router.Use(middleware.Heartbeat("/"))
 	router.Use(middleware.RealIP) // Add this middleware ONLY if the service is behind a proxy or gateway !
 
 	cors.InitGoCHI(transport.httpConfig.CORS, router)

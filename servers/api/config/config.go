@@ -1,9 +1,9 @@
-package api
+package config
 
 import (
 	"fmt"
 
-	"go-clean-archi/servers/cors"
+	"your_module/servers/cors"
 )
 
 type Config struct {

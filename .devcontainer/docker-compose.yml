@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  project_api:
+    volumes:
+      - .:/workspace:cached
+      - project-api-home:/home/vscode
+volumes:
+  project-api-home:

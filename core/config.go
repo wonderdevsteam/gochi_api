@@ -5,8 +5,8 @@ import (
 
 	"go.uber.org/config"
 
-	"go-clean-archi/servers/api"
-	"go-clean-archi/services/zap"
+	api "your_module/servers/api/config"
+	"your_module/services/zap"
 )
 
 type Config struct {
@@ -14,7 +14,7 @@ type Config struct {
 	Logger zap.Config `yaml:"logger"`
 }
 
-func NewConfigFromYAML(paths ...string) Config {
+func NewConfigFromYAML(paths ...string) *Config {
 	provider, err := config.NewYAML(getPathsAsSource(paths)...)
 
 	if err != nil {
@@ -27,7 +27,7 @@ func NewConfigFromYAML(paths ...string) Config {
 		log.Fatal("Could not read configs", err)
 	}
 
-	return conf
+	return &conf
 }
 
 func getPathsAsSource(paths []string) (sources []config.YAMLOption) {

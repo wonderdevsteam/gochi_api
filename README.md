@@ -1,4 +1,4 @@
-# go-clean-archi
+# your_module
 
 Go clean archi aims to propose a base skeletons for clean architecture projects with rest API or command line
 interfaces.

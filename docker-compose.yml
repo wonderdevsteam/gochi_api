@@ -1,0 +1,69 @@
+version: "3.8"
+
+services:
+  project_postgres:
+    container_name: project_postgres
+    image: postgres:alpine
+    env_file: .env
+    volumes:
+      - project-postgres-data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    ports:
+      - 5432:5432
+    networks:
+      - sample_network
+
+  project_api:
+    container_name: project_api
+    build:
+      context: ./
+      dockerfile: infra/images/local/api.Dockerfile
+    volumes:
+      - .:/home/app
+    networks:
+      - sample_network
+    env_file: .env
+    environment:
+      - PYTHONUNBUFFERED=TRUE
+    # command:
+    #   - "python"
+    #   - "-m"
+    #   - "debugpy"
+    #   - "--listen"
+    #   - "0.0.0.0:8001"
+    #   - "sample_network.py"
+    ports:
+      - 8888:8888
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.api.rule=Host(`api.localhost`)
+
+
+  reverse-proxy:
+    image: traefik:v2.4
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entryPoints.web.address=:80"
+      - "--log.level=DEBUG"
+    ports:
+      - "80:80"
+      - "8080:8080"
+    restart: always
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=boy
+      - traefik.http.routers.reverse-proxy.rule=Host(`traefik.localhost`)
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - sample_network
+
+volumes:
+  project-postgres-data: null
+
+networks:
+  sample_network:
+    name: sample_network

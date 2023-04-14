@@ -2,6 +2,8 @@ package routes
 
 import (
 	"go.uber.org/zap"
+
+	"your_module/domain/usecases"
 )
 
 type Endpoints struct {

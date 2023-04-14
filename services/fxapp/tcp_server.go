@@ -6,7 +6,7 @@ import (
 	"go.uber.org/fx"
 	"go.uber.org/zap"
 
-	"go-clean-archi/servers"
+	"your_module/servers"
 )
 
 type server struct {

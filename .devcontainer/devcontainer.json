@@ -1,0 +1,51 @@
+{
+  "name": "PROJECT API",
+  "dockerComposeFile": [
+    "../docker-compose.yml",
+    "docker-compose.yml"
+  ],
+  "service": "project_api",
+  "workspaceFolder": "/home/app",
+  "shutdownAction": "stopCompose",
+  "postCreateCommand": "cd infra/images/local/gitutils && ./install.sh && git config --global pull.rebase true",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "visualstudioexptteam.vscodeintellicode",
+        "redhat.vscode-yaml",
+        "ryanluker.vscode-coverage-gutters",
+        "mikestead.dotenv",
+        "alanwalk.markdown-toc",
+        "darkriszty.markdown-table-prettify",
+        "2gua.rainbow-brackets",
+        "brainfit.vscode-importmagic",
+        "rangav.vscode-thunder-client",
+        "davidanson.vscode-markdownlint",
+        "eamodio.gitlens",
+        "golang.go",
+        "msyrus.go-doc",
+        "766b.go-outliner",
+        "premparihar.gotestexplorer",
+        "aleksandra.go-group-imports"
+      ],
+      "settings": {
+        "files.trimTrailingWhitespace": true,
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/usr/bin/zsh",
+            "args": [
+              "-l"
+            ]
+          }
+        },
+        "thunder-client.loadFromProject": true,
+        "thunder-client.workspaceRelativePath": ".thunderclient",
+        "thunder-client.showActivityFromCollection": true,
+        "coverage-gutters.coverageReportFileName": "coverage/index.html",
+        "coverage-gutters.showLineCoverage": true,
+        "coverage-gutters.showRulerCoverage": true,
+        "files.eol": "\n"
+      }
+    }
+  }
+}
